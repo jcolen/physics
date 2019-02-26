@@ -1,0 +1,448 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     16024,        440]
+NotebookOptionsPosition[     14380,        406]
+NotebookOutlinePosition[     14713,        421]
+CellTagsIndexPosition[     14670,        418]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Overlap integrals for Hydrogen atoms", "Section",
+ CellChangeTimes->{{3.760205372728332*^9, 
+  3.760205390790147*^9}},ExpressionUUID->"87b6a3b9-395e-4430-9721-\
+12504bf77ea4"],
+
+Cell[TextData[{
+ "Useful functions for calculating overlap integrals in hydrogen atoms. These \
+were used in homework problems which required calculation of linear Stark \
+effect matrix elements for large ",
+ StyleBox["n",
+  FontSlant->"Italic"],
+ ". "
+}], "Text",
+ CellChangeTimes->{{3.76020539535255*^9, 
+  3.760205456504354*^9}},ExpressionUUID->"45b2b803-f5d4-41f1-be6c-\
+8dccdd072ee2"],
+
+Cell[TextData[{
+ StyleBox["RadialFunction",
+  FontSlant->"Italic"],
+ " gives the radial wavefunction expression for the hydrogen atom. The total \
+wavefunction is given by ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["\[CapitalPsi]", "nlm"], "=", " ", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["R", "nl"], "(", "r", ")"}], 
+     RowBox[{
+      SubscriptBox["Y", "lm"], "(", 
+      RowBox[{"\[Theta]", ",", " ", "\[Phi]"}], ")"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "284a053f-2e5e-4e96-a279-173361597c6f"],
+ "\n@param ",
+ StyleBox["n, l ",
+  FontSlant->"Italic"],
+ "- The principal and orbital quantum numbers\n@param ",
+ StyleBox["r",
+  FontSlant->"Italic"],
+ " - The radial parameter\n@param ",
+ StyleBox["a0 - ",
+  FontSlant->"Italic"],
+ "A placeholder for the Bohr radius"
+}], "Text",
+ CellChangeTimes->{{3.760205464001184*^9, 
+  3.760205617219697*^9}},ExpressionUUID->"ba6ba519-6637-4e73-9ab2-\
+56bca867b2f1"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RadialFunction", "[", 
+   RowBox[{"n_", ",", " ", "l_", ",", " ", "r_", ",", " ", "a0_"}], "]"}], ":=",
+   " ", 
+  RowBox[{
+   RowBox[{"-", 
+    SqrtBox[
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"(", 
+        FractionBox["2", 
+         RowBox[{"n", " ", "a0"}]], ")"}], "3"], 
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"n", " ", "-", " ", "l", " ", "-", " ", "1"}], ")"}], "!"}], 
+       
+       RowBox[{"2", "n", " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"n", " ", "+", " ", "l"}], ")"}], "!"}], ")"}], 
+         "3"]}]]}]]}], 
+   SuperscriptBox["E", 
+    FractionBox[
+     RowBox[{"-", "r"}], 
+     RowBox[{"n", " ", "a0"}]]], " ", 
+   RowBox[{
+    RowBox[{"(", 
+     FractionBox[
+      RowBox[{"2", "r"}], 
+      RowBox[{"n", " ", "a0"}]], ")"}], "^", "l"}], " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"n", " ", "+", " ", "l"}], ")"}], "!"}], 
+   RowBox[{"LaguerreL", "[", 
+    RowBox[{
+     RowBox[{"n", "-", "l", "-", "1"}], ",", " ", 
+     RowBox[{
+      RowBox[{"2", "l"}], "+", "1"}], ",", " ", 
+     FractionBox[
+      RowBox[{"2", "r"}], 
+      RowBox[{"n", " ", "a0"}]]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.757866641855638*^9, 3.7578667487951717`*^9}, {
+  3.757866786877472*^9, 3.7578669230773497`*^9}, {3.75786800668906*^9, 
+  3.757868010167397*^9}, {3.757871905994602*^9, 3.757871907452201*^9}, {
+  3.760205467868548*^9, 3.760205469271309*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"a88f146a-9d10-4329-8bfd-dc7734f0dd2f"],
+
+Cell[TextData[{
+ "Calculates the overlap integral for a given expression. For a given \
+expression ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", 
+    OverscriptBox["r", "\[RightVector]"]}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "749c94bb-f2fb-4783-b383-acb64e663840"],
+ "), the overlap integral is given by ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{
+      SuperscriptBox["\[DifferentialD]", "3"], "x"}], " ", 
+     SubscriptBox[
+      SuperscriptBox["\[CapitalPsi]", "*"], "nlm"], 
+     RowBox[{"f", "(", 
+      OverscriptBox["r", "\[RightVector]"], ")"}], " ", 
+     SubscriptBox["\[CapitalPsi]", 
+      RowBox[{
+       RowBox[{"n", "'"}], 
+       RowBox[{"l", "'"}], 
+       RowBox[{"m", "'"}]}]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "00b9cb74-1fd1-422b-94d6-122138409027"],
+ "\n@param ",
+ StyleBox["n1, l1, m1, n2, l2, m2",
+  FontSlant->"Italic"],
+ " - Principal and orbital quantum numbers to be calculated with\n@param ",
+ StyleBox["a0",
+  FontSlant->"Italic"],
+ " - A placeholder for the Bohr radius\n@param ",
+ StyleBox["expr",
+  FontSlant->"Italic"],
+ " - The expression ",
+ StyleBox["f(r, \[Theta]",
+  FontSlant->"Italic"],
+ ", \[Phi]) which goes into the overlap integral "
+}], "Text",
+ CellChangeTimes->{{3.7602056219132338`*^9, 3.760205742357874*^9}, {
+  3.760205776837964*^9, 
+  3.760205952865839*^9}},ExpressionUUID->"f7078d11-6796-4ef9-af29-\
+a362406064d8"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Overlap", "[", 
+   RowBox[{
+   "n1_", ",", " ", "l1_", ",", " ", "m1_", ",", " ", "n2_", ",", " ", "l2_", 
+    ",", " ", "m2_", ",", " ", "a0_", ",", " ", "expr_"}], "]"}], ":=", 
+  "\[IndentingNewLine]", 
+  RowBox[{"Integrate", "[", " ", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox["r", "2"], "\[IndentingNewLine]", 
+     RowBox[{"Integrate", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Sin", "[", "\[Theta]", "]"}], "\[IndentingNewLine]", 
+        RowBox[{"Integrate", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"R", "[", 
+            RowBox[{"n1", ",", " ", "l1", ",", " ", "r", ",", " ", "a0"}], 
+            "]"}], " ", 
+           RowBox[{"SphericalHarmonicY", "[", 
+            RowBox[{
+            "l1", ",", " ", "m1", ",", " ", "\[Theta]", ",", " ", "\[Phi]"}], 
+            "]"}], "\[IndentingNewLine]", "expr", "\[IndentingNewLine]", 
+           RowBox[{"R", "[", 
+            RowBox[{"n2", ",", " ", "l2", ",", " ", "r", ",", " ", "a0"}], 
+            "]"}], 
+           RowBox[{"SphericalHarmonicY", "[", 
+            RowBox[{
+            "l2", ",", " ", "m2", ",", " ", "\[Theta]", ",", " ", "\[Phi]"}], 
+            "]"}], "\[IndentingNewLine]", 
+           SuperscriptBox["E", 
+            RowBox[{
+             RowBox[{"-", "2"}], " ", "\[ImaginaryI]", " ", "m1", " ", 
+             "\[Phi]"}]]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"\[Phi]", ",", " ", "0", ",", " ", 
+            RowBox[{"2", "Pi"}]}], "}"}]}], "]"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"\[Theta]", ",", " ", "0", ",", " ", "Pi"}], "}"}]}], "]"}]}],
+     ",", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{"r", ",", " ", "0", ",", " ", "Infinity"}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.757866946887238*^9, 3.7578669909962997`*^9}, {
+   3.757867023407251*^9, 3.757867096648808*^9}, {3.757867142280839*^9, 
+   3.757867220373577*^9}, {3.7578674418573103`*^9, 3.757867495313182*^9}, {
+   3.757868179600047*^9, 3.757868216235989*^9}, {3.757868255509996*^9, 
+   3.757868272708334*^9}, {3.757868916606866*^9, 3.757868918849325*^9}, {
+   3.757869697301045*^9, 3.757869701022472*^9}, {3.757869740840396*^9, 
+   3.757869744195187*^9}, {3.75786992723435*^9, 3.757869974046199*^9}, {
+   3.757871880136821*^9, 3.757871897877969*^9}, {3.760205198473692*^9, 
+   3.760205207583314*^9}, 3.760205339951406*^9},
+ CellLabel->"In[11]:=",ExpressionUUID->"01938ec8-3034-49b9-977b-0fc29a4b23f7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Example - Linear Stark Effect", "Section",
+ CellChangeTimes->{{3.7602059692300253`*^9, 
+  3.7602059741373863`*^9}},ExpressionUUID->"ca7c79f9-a5c5-4929-bbed-\
+b5ba3f43ba4b"],
+
+Cell[TextData[{
+ "Calculate the nonzero matrix elements of the linear Stark effect for n = 3. \
+An electric field is applied along the ",
+ StyleBox["z ",
+  FontSlant->"Italic"],
+ "direction, so the overlap integrals must be calculated for overlap function \
+",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"f", "(", 
+     OverscriptBox["r", "\[RightVector]"], ")"}], " ", "=", " ", 
+    RowBox[{"z", " ", "=", " ", 
+     RowBox[{"r", " ", 
+      RowBox[{"cos", "(", "\[Theta]", ")"}]}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "b2e90413-c462-4941-a11e-9caba8e77285"],
+ ". Because of the selection rules involving parity (",
+ StyleBox["l` = l \[PlusMinus] ",
+  FontSlant->"Italic"],
+ "1) and commutation of ",
+ StyleBox["z",
+  FontSlant->"Italic"],
+ " with ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["L", "z"], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "622571dc-c73e-4ac2-a2a4-273866d71271"],
+ " (",
+ StyleBox["m` = m",
+  FontSlant->"Italic"],
+ "), some expressions can be ignored."
+}], "Text",
+ CellChangeTimes->{{3.760205985984682*^9, 
+  3.760206245592454*^9}},ExpressionUUID->"e34ec323-d51c-40dd-9f6b-\
+a3f04215b640"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"$Assumptions", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"Re", "[", "a0", "]"}], " ", ">", " ", "0"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7602063357848587`*^9, 3.760206365553115*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"3dda8ab4-fd98-4a67-bbab-d68b86487153"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Do", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Do", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Abs", "[", 
+         RowBox[{"l2", "-", "l1"}], "]"}], "\[Equal]", "1"}], ",", " ", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Print", "[", 
+          RowBox[{
+          "\"\<<\>\"", ",", " ", "3", ",", " ", "l1", ",", " ", "m", ",", 
+           " ", "\"\<|z|\>\"", ",", " ", "3", ",", " ", "l2", ",", " ", "m", 
+           ",", " ", "\"\<> = \>\"", ",", " ", 
+           RowBox[{"Overlap", "[", 
+            RowBox[{
+            "3", ",", " ", "l1", ",", " ", "m", ",", " ", "3", ",", " ", "l2",
+              ",", " ", "m", ",", " ", "a0", ",", " ", 
+             RowBox[{"r", " ", 
+              RowBox[{"Cos", "[", "\[Theta]", "]"}]}]}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"{", 
+          RowBox[{"m", ",", " ", 
+           RowBox[{"-", 
+            RowBox[{"Min", "[", 
+             RowBox[{"l1", ",", " ", "l2"}], "]"}]}], ",", " ", 
+           RowBox[{"Min", "[", 
+            RowBox[{"l1", ",", " ", "l2"}], "]"}]}], "}"}]}], "]"}]}], "]"}], 
+     ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"l2", ",", " ", "l1", ",", " ", "2"}], "}"}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"l1", ",", " ", "0", ",", " ", "2"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.760206374336001*^9, 3.760206655607676*^9}, {
+  3.76020671815335*^9, 3.760206723339466*^9}},
+ CellLabel->"In[22]:=",ExpressionUUID->"020c858a-5fac-4830-9c7e-5c187f8611c3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"<\"\>", "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "0", "\[InvisibleSpace]", "\<\"|z|\"\>", 
+   "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "1", "\[InvisibleSpace]", 
+   "0", "\[InvisibleSpace]", "\<\"> = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "3"}], " ", 
+    SqrtBox["6"], " ", "a0"}]}],
+  SequenceForm[
+  "<", 3, 0, 0, "|z|", 3, 1, 0, "> = ", (-3) 6^Rational[1, 2] $CellContext`a0],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.760206539717786*^9, 3.76020658806135*^9, {3.7602066226888514`*^9, 
+   3.760206656465304*^9}, 3.7602067242913237`*^9},
+ CellLabel->
+  "During evaluation of \
+In[22]:=",ExpressionUUID->"723aaf92-5623-470a-bd02-7e65da5db8e3"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"<\"\>", "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", 
+   RowBox[{"-", "1"}], "\[InvisibleSpace]", "\<\"|z|\"\>", 
+   "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "2", "\[InvisibleSpace]", 
+   RowBox[{"-", "1"}], "\[InvisibleSpace]", "\<\"> = \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"-", 
+    FractionBox[
+     RowBox[{"9", " ", "a0"}], "2"]}]}],
+  SequenceForm[
+  "<", 3, 1, -1, "|z|", 3, 2, -1, "> = ", Rational[-9, 2] $CellContext`a0],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.760206539717786*^9, 3.76020658806135*^9, {3.7602066226888514`*^9, 
+   3.760206656465304*^9}, 3.760206724597625*^9},
+ CellLabel->
+  "During evaluation of \
+In[22]:=",ExpressionUUID->"a89d480b-0197-4923-b395-135fc570c571"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"<\"\>", "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "0", "\[InvisibleSpace]", "\<\"|z|\"\>", 
+   "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "2", "\[InvisibleSpace]", 
+   "0", "\[InvisibleSpace]", "\<\"> = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "3"}], " ", 
+    SqrtBox["3"], " ", "a0"}]}],
+  SequenceForm[
+  "<", 3, 1, 0, "|z|", 3, 2, 0, "> = ", (-3) 3^Rational[1, 2] $CellContext`a0],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.760206539717786*^9, 3.76020658806135*^9, {3.7602066226888514`*^9, 
+   3.760206656465304*^9}, 3.760206724995296*^9},
+ CellLabel->
+  "During evaluation of \
+In[22]:=",ExpressionUUID->"4157390b-f212-4a55-b526-8376f47f9c76"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"<\"\>", "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\"|z|\"\>", 
+   "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "2", "\[InvisibleSpace]", 
+   "1", "\[InvisibleSpace]", "\<\"> = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"-", 
+    FractionBox[
+     RowBox[{"9", " ", "a0"}], "2"]}]}],
+  SequenceForm[
+  "<", 3, 1, 1, "|z|", 3, 2, 1, "> = ", Rational[-9, 2] $CellContext`a0],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.760206539717786*^9, 3.76020658806135*^9, {3.7602066226888514`*^9, 
+   3.760206656465304*^9}, 3.7602067253055677`*^9},
+ CellLabel->
+  "During evaluation of \
+In[22]:=",ExpressionUUID->"3ea8c7b0-f6fd-40c8-9bae-72435571a447"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1600, 843},
+WindowMargins->{{0, Automatic}, {0, Automatic}},
+FrontEndVersion->"11.3 for Linux x86 (64-bit) (March 6, 2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 181, 3, 68, "Section",ExpressionUUID->"87b6a3b9-395e-4430-9721-12504bf77ea4"],
+Cell[764, 27, 389, 10, 35, "Text",ExpressionUUID->"45b2b803-f5d4-41f1-be6c-8dccdd072ee2"],
+Cell[1156, 39, 970, 30, 104, "Text",ExpressionUUID->"ba6ba519-6637-4e73-9ab2-56bca867b2f1"],
+Cell[2129, 71, 1603, 49, 73, "Input",ExpressionUUID->"a88f146a-9d10-4329-8bfd-dc7734f0dd2f"],
+Cell[3735, 122, 1486, 44, 108, "Text",ExpressionUUID->"f7078d11-6796-4ef9-af29-a362406064d8"],
+Cell[5224, 168, 2551, 55, 306, "Input",ExpressionUUID->"01938ec8-3034-49b9-977b-0fc29a4b23f7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7812, 228, 178, 3, 68, "Section",ExpressionUUID->"ca7c79f9-a5c5-4929-bbed-b5ba3f43ba4b"],
+Cell[7993, 233, 1189, 36, 58, "Text",ExpressionUUID->"e34ec323-d51c-40dd-9f6b-a3f04215b640"],
+Cell[9185, 271, 301, 6, 31, "Input",ExpressionUUID->"3dda8ab4-fd98-4a67-bbab-d68b86487153"],
+Cell[CellGroupData[{
+Cell[9511, 281, 1703, 40, 193, "Input",ExpressionUUID->"020c858a-5fac-4830-9c7e-5c187f8611c3"],
+Cell[CellGroupData[{
+Cell[11239, 325, 767, 17, 28, "Print",ExpressionUUID->"723aaf92-5623-470a-bd02-7e65da5db8e3"],
+Cell[12009, 344, 799, 19, 42, "Print",ExpressionUUID->"a89d480b-0197-4923-b395-135fc570c571"],
+Cell[12811, 365, 765, 17, 28, "Print",ExpressionUUID->"4157390b-f212-4a55-b526-8376f47f9c76"],
+Cell[13579, 384, 761, 17, 42, "Print",ExpressionUUID->"3ea8c7b0-f6fd-40c8-9bae-72435571a447"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
